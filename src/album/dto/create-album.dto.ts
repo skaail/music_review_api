@@ -3,9 +3,8 @@ export class CreateAlbumDto {
 
     nome: string
 
-    banda: string
+    banda: string 
 
-    capa: string
 
     link: string
 

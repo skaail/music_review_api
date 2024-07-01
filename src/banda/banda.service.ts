@@ -20,13 +20,13 @@ export class BandaService {
     }
 
     async findAll(): Promise<CreateBandaDto[]> {
-        const bandas = await this.repository.find()
+        const bandas = await this.repository.find({ relations: {albuns: true}})
 
         return bandas
     }
 
     async findByName(nome: string) {
-        const banda =  await this.repository.find({ where: {nome: nome}})
+        const banda =  await this.repository.findOne({ where: {nome: nome}})
 
         return banda
     }

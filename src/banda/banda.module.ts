@@ -7,6 +7,7 @@ import { Banda } from './entities/banda.entity';
 @Module({
   providers: [BandaService],
   controllers: [BandaController],
-  imports: [TypeOrmModule.forFeature([Banda])]
+  imports: [TypeOrmModule.forFeature([Banda])],
+  exports: [TypeOrmModule, BandaService]
 })
 export class BandaModule {}

@@ -20,6 +20,6 @@ export class Album {
     link: string
 
     @Column()
-    nota?: number | undefined
+    nota?: number 
 
 }
