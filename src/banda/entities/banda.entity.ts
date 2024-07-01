@@ -11,6 +11,6 @@ export class Banda {
     nome: string
 
     @OneToMany(() => Album, (album) => album.banda)
-    albuns: Album[]
+    albuns?: Album[] | undefined
 
 }
