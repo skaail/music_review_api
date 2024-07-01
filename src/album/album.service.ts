@@ -4,6 +4,7 @@ import { Album } from './entities/album.entity';
 import { Repository } from 'typeorm';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { BandaService } from 'src/banda/banda.service';
+import { DarNotaDto } from './dto/dar-nota.dto';
 const albumArt = require('album-art');
 
 @Injectable()
@@ -38,6 +39,14 @@ export class AlbumService {
         const albums = await this.repository.find({ relations: {banda: true}})
 
         return albums
+    }
+
+    async darDota(album: DarNotaDto){
+        const res = await this.repository.findOne({where: {nome: album.nome}})
+
+        res.nota = album.nota
+
+        return await this.repository.save(res)
     }
 
     async getAlbumArt(album, banda): Promise<string> {
