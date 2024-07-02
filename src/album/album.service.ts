@@ -5,11 +5,16 @@ import { Repository } from 'typeorm';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { BandaService } from 'src/banda/banda.service';
 import { DarNotaDto } from './dto/dar-nota.dto';
+import { AlbumsGateway } from './album.gateway';
 const albumArt = require('album-art');
 
 @Injectable()
 export class AlbumService {
-    constructor(@InjectRepository(Album) private repository: Repository<Album>, private readonly bandaService: BandaService) { }
+    constructor(
+        @InjectRepository(Album) private repository: Repository<Album>, 
+        private readonly bandaService: BandaService, 
+        private readonly albumsGateway: AlbumsGateway
+    ) { }
 
     async create(album: CreateAlbumDto): Promise<any> {
         let albumEntity = new Album()
@@ -31,6 +36,7 @@ export class AlbumService {
         }
 
         albumEntity = await this.repository.save(albumEntity)
+        this.albumsGateway.notifyNewAlbum(albumEntity)
 
         return albumEntity
     }
