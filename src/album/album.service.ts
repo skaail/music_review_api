@@ -20,10 +20,6 @@ export class AlbumService {
         let albumEntity = new Album()
         let banda = await this.bandaService.findByName(album.banda)
 
-        if(!banda) {
-            banda = await this.bandaService.create({nome: album.banda})
-        }
-
         albumEntity.nome = album.nome
         albumEntity.banda = banda
         albumEntity.nota = 0
@@ -33,6 +29,10 @@ export class AlbumService {
 
         if(await this.repository.findOne({where: {nome: albumEntity.nome}})){
             throw new HttpException('Este Album Já Foi Criado', HttpStatus.CONFLICT)
+        }
+
+        if(!banda) {
+            banda = await this.bandaService.create({nome: album.banda})
         }
 
         albumEntity = await this.repository.save(albumEntity)
